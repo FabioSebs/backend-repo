@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -14,5 +13,4 @@ const firebaseConfig = {
   measurementId: process.env.PROJECT_MEASUREMENT_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+export const firebaseApp = initializeApp(firebaseConfig);
