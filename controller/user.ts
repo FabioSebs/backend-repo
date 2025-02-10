@@ -2,7 +2,7 @@ import { Response } from "express";
 import { getDefaultResponse } from "../types/responses.js";
 import { FirebaseRequest } from "../middleware/firebaseMiddleware.js";
 import { User } from "../entities/user.js";
-import { createUser, getUser, updateUser } from "../repository/userCollection.js";
+import { createUser, getUser, updateUser, loginUser } from "../repository/userCollection.js";
 
 const userCollection = "users"
 
@@ -28,7 +28,7 @@ export async function updateUserData(req: FirebaseRequest, res: Response) {
     }
 }
 
-export async function createUserData(req: FirebaseRequest, res: Response) {
+export async function registerUserData(req: FirebaseRequest, res: Response) {
     const userData: User = req.body;
 
     if (!userData.email) {
@@ -37,5 +37,17 @@ export async function createUserData(req: FirebaseRequest, res: Response) {
 
    if (req.fireStore) {
     return await createUser(res, req.fireStore, userCollection, userData.email, userData)
+   }
+}
+
+export async function loginUserData(req: FirebaseRequest, res: Response) {
+    const userData: User = req.body;
+
+    if (!userData.email) {
+        return res.status(400).json(getDefaultResponse(400, { message: "invalid email" }, true));
+    }
+
+   if (req.fireStore) {
+    return await loginUser(res, req.fireStore, userCollection, userData.email, userData.password)
    }
 }
