@@ -1,17 +1,12 @@
 import express from "express";
 const userRouter = express.Router();
-import { Request, Response } from "express"; 
+import { authMiddleware } from "../middleware/authMiddleware.js";
+import { fetchUserData, updateUserData, createUserData } from "../controller/user.js";
 
-userRouter.get("fetch-user-data", (req : Request , res : Response) => {
-    res.send("")
-})
+userRouter.get("/fetch-user-data/:email", fetchUserData, authMiddleware)
 
-userRouter.patch("update-user-data", (req : Request, res : Response) => {
-    res.send("")
-})
+userRouter.patch("/update-user-data/:email", updateUserData, authMiddleware)
 
-userRouter.patch("create-user-data", (req : Request, res : Response) => {
-    res.send("")
-})
+userRouter.post("/create-user-data", createUserData)
 
 export default userRouter

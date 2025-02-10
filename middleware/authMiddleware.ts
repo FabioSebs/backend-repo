@@ -1,6 +1,6 @@
 import admin from "firebase-admin";
 import dotenv from "dotenv";
-import { getDefaultResponse } from "../types/responses.ts";
+import { getDefaultResponse } from "../types/responses.js";
 import { Request, Response, NextFunction } from "express"
 dotenv.config();
 
@@ -18,7 +18,7 @@ export const authMiddleware = async (req: AuthRequest, res: Response, next: Next
   const token = req.headers.authorization?.split("Bearer ")[1];
 
   if (!token) {
-    return res.status(401).json(getDefaultResponse(401, { message: "Unauthorized: No token provided" }, true));
+    return res.status(401).json(getDefaultResponse(401, { message: "unauthorized: no token provided" }, true));
   }
 
   try {
@@ -26,7 +26,7 @@ export const authMiddleware = async (req: AuthRequest, res: Response, next: Next
     req.user = decodedToken;
     next();
   } catch (error) {
-    return res.status(403).json(getDefaultResponse(403, { message: "Unauthorized: Invalid token" }, true));
+    return res.status(403).json(getDefaultResponse(403, { message: "unauthorized: invalid token" }, true));
   }
 };
 

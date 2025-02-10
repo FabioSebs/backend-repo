@@ -1,8 +1,7 @@
 import express from "express";
 import  dotenv from "dotenv";
-import { firebaseMiddleware } from "../middleware/firebaseMiddleware.ts";
-import { authMiddleware } from "../middleware/authMiddleware.ts";
-import userRouter from "../routes/userRoutes.ts";
+import { firebaseMiddleware } from "../middleware/firebaseMiddleware.js";
+import userRouter from "../routes/userRoutes.js";
 
 // * config
 dotenv.config();
@@ -11,7 +10,6 @@ const PORT = process.env.PORT || 3000;
 
 // * middlewares
 app.use(express.json());
-app.use(authMiddleware)
 app.use(firebaseMiddleware)
 
 // * routes
