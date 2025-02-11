@@ -3,7 +3,7 @@ import { Response } from "express"
 import { getDefaultResponse } from "../types/responses.js"
 import { User } from "../entities/user.js"
 import admin from "firebase-admin";
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 
 const SALT_ROUNDS = 10;
 
@@ -107,13 +107,13 @@ export async function loginUser(
       }
   
       const userData = userSnap.data() as User;
+      
       const isPasswordValid = await bcrypt.compare(enteredPassword, userData.password);
-  
+      
       if (!isPasswordValid) {
         return res.status(400).json(getDefaultResponse(400, { message: "Invalid email or password" }, true));
       }
   
-      // 🔹 Generate a Firebase token for authentication
       const customToken = await admin.auth().createCustomToken(email);
   
       return res.status(200).json(

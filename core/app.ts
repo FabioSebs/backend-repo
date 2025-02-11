@@ -7,12 +7,12 @@ import userRouter from "../routes/userRoutes.js";
 // * config
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
 // * middlewares
 app.use(cors({
-    origin: "http://localhost:3000", // Allow requests from this origin
-    credentials: true, // Allow cookies if needed
+    origin: "*", 
+    credentials: true, 
   }));
 app.use(express.json());
 app.use(firebaseMiddleware)
@@ -22,6 +22,6 @@ app.use("/v1", userRouter)
 
 
 // * server run
-app.listen(PORT, () => {
+app.listen(PORT as number, "0.0.0.0", () => {
     console.log(`Server is running on port : ${PORT}`);
 });
